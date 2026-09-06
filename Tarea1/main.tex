@@ -1,0 +1,299 @@
+\documentclass[letterpaper,11pt]{article}
+
+% --- PAQUETES DE IDIOMA
+\usepackage[spanish,mexico]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{iftex}
+
+\usepackage{pdfpages}
+
+% --- PAQUETES MATEMÁTICOS --
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+
+% --- PAQUETES GRÁFICOS Y DE DISEÑO ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{subcaption}
+\usepackage[table]{xcolor}
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, shapes.multipart, positioning, arrows.meta, calc, shadows, decorations.pathreplacing,babel}
+
+% --- LISTAS ---
+\usepackage{enumitem}
+
+% --- PAQUETES DE CÓDIGO ---
+\usepackage{listings}
+% Configuración del estilo de listings
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}   
+\definecolor{keyword}{rgb}{0.0,0.2,0.6}     
+\definecolor{comment}{rgb}{0.25,0.5,0.35}   
+\definecolor{string}{rgb}{0.6,0.0,0.0}      
+\definecolor{number}{rgb}{0.5,0.0,0.5}      
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstset{
+  backgroundcolor=\color{backcolour},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{codepurple},
+  commentstyle=\color{codegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{codegray},
+  frame=single,
+  rulecolor=\color{black},
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  literate={á}{{\'a}}1
+           {é}{{\'e}}1
+           {í}{{\'i}}1
+           {ó}{{\'o}}1
+           {ú}{{\'u}}1
+           {Á}{{\'A}}1
+           {É}{{\'E}}1
+           {Í}{{\'I}}1
+           {Ó}{{\'O}}1
+           {Ú}{{\'U}}1
+           {ñ}{{\~n}}1
+           {Ñ}{{\~N}}1
+           {¿}{{\textquestiondown}}1
+           {¡}{{\textexclamdown}}1
+}
+
+% Estilo para código en C
+\lstdefinestyle{cstyle}{
+  language=C,
+  backgroundcolor=\color{backcolour},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+    keywordstyle=[2]\color{yellow!70!orange}\bfseries,
+    morekeywords=[2]{MPI_Init,MPI_Comm_size,MPI_Comm_rank,MPI_Send,MPI_Recv,MPI_Scatter,MPI_Gather,MPI_Bcast,MPI_Reduce,MPI_Finalize},
+    emph={printf},
+    emphstyle=\color{blue}\bfseries,
+  stringstyle=\color{codepurple},
+  commentstyle=\color{codegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{codegray},
+  frame=single,
+  rulecolor=\color{black},
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false
+}
+
+% Definición del lenguaje Python para listings
+\lstdefinelanguage[LAB]{Python}{
+    morekeywords={False, None, True, and, as, assert, async, await, break,
+                                class, continue, def, del, elif, else, except, finally,
+                                for, from, global, if, import, in, is, lambda, nonlocal,
+                                not, or, pass, raise, return, try, while, with, yield,
+                                machine, Pin, PWM, ADC, Timer, sleep_ms, sleep_us},
+    morecomment=[l]{\#},
+    morestring=[b]",
+    morestring=[b]',
+    sensitive=true
+}
+
+% Estilo para salidas de consola/terminal
+\lstdefinestyle{output}{
+  backgroundcolor=\color{black!5},
+  basicstyle=\ttfamily\footnotesize,
+  numbers=none,
+  frame=single,
+  rulecolor=\color{black!30},
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  xleftmargin=0.5cm,
+  xrightmargin=0.5cm
+}
+
+% --- ESTILOS PARA DIAGRAMAS DE FLUJO (TIKZ) ---
+\tikzset{
+  startstop/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30},
+  process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
+  decision/.style={diamond, aspect=2, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+  io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30},
+  arrow/.style={thick,->,>=stealth}
+}
+
+
+\definecolor{azulresultado}{HTML}{0072C6}
+\definecolor{rojoacarreo}{HTML}{FF0000}
+
+% --- RUTAS DE IMÁGENES ---
+\graphicspath{{img/}{portada_img/}}
+
+\definecolor{armblue}{RGB}{0, 113, 188}
+
+% --- ÍNDICE CON PUNTOS ---
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% --- CONFIGURACIÓN DE PÁGINA (GEOMETRÍA) ---
+\usepackage[
+    left=25mm, 
+    right=25mm,
+    top=35mm,
+    bottom=30mm,
+    headheight=77pt, 
+    papersize={21.59cm,27.94cm}
+]{geometry}
+
+% --- FORMATO DE TEXTO ---
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip} 
+\usepackage{lipsum}  
+
+% --- VARIABLES GLOBALES ---
+\newcommand{\materia}{}
+
+% --- ENCABEZADOS Y PIES DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} 
+\fancyhead[L]{\includegraphics[height=1.5cm]{portada_img/der.png}}
+\fancyhead[R]{\includegraphics[height=1.5cm]{portada_img/izq.png}}
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0.4pt} 
+\renewcommand{\footrulewidth}{0pt}  
+
+% --- BIBLIOGRAFÍA ---
+\usepackage[backend=biber, style=apa, sortcites, url=true]{biblatex}
+\addbibresource{referencias.bib}
+
+% --- HIPERVÍNCULOS ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan
+}
+
+\begin{document}
+
+\input{portada.tex}
+
+\newpage
+{\hypersetup{linkcolor=black}\tableofcontents}
+
+
+\newpage
+
+\setcounter{page}{1}
+\singlespacing
+
+\section{Customer Experience Management}
+
+\subsection{¿A qué se refiere el concepto Customer Experience Management?}
+
+En este caso, el concepto de
+Customer Experience Management, 
+lo que nos dice es que se trata del conjunto de procesos 
+y estrategias que las empresas utilizan
+esto para poder ver de una manera un tanto
+supervisaada cada interacción entre un cliente 
+y la dicha enmpresa 
+todo esto durante todo el ciclo de vida del consumidor. 
+
+Lo que nos dice que no es 
+que no se trata de solo servicio al cliente, 
+sino que abarca desde que el cliente descubre la marca, 
+hasta el proceso final de postventa.
+
+No obstante, 
+casi todo el enfoque de todo esto 
+se concentra en conocer a nuestro porpio cliente, 
+permitiendo crear experiencias personalizadas. 
+Este comportamiento nos dice que, en la captura de datos y operaciones, se deben conservar todas las interacciones para
+asegurar que el usuario o cliente tenga una experiencia mucho mejor poco a poco y se quede con la empresa. 
+
+\subsection{Elementos del CXM}
+
+En este caso, el CXM maneja diferentes niveles de interacción, tal es el caso 
+del Cutomer Journey y los Touchpoints.
+
+\begin{itemize}
+    \item \textbf{Customer Journey:} \underline{\hspace{0.5cm}\textbf{Recorrido completo}\hspace{0.5cm}} 
+    
+    Para este caso, al analizar la información de los clientes, 
+    lo que se logra identificar es una representacion
+    visual de cada paso que da el cliente 
+    desde la necesidad hasta la compra. 
+    
+    
+    \item \textbf{Touchpoints:} \underline{\hspace{0.5cm}\textbf{Interacciones directas}\hspace{0.5cm}}
+    
+    Ahora bien, para esto, 
+    al revisar los datos operativos, 
+    los touchpoints son los momentos exactos donde 
+    el cliente interactúa con la marca 
+    (sitio web, aplicación, tienda física, soporte técnico).
+
+\end{itemize}
+
+\subsection{Interpretación del impacto del CXM en el negocio}
+
+Despues de lo anterior, si se le da una buena experiencia, se tendra que el 
+comportamiento de compra de los clientes podra aumentar, lo que provocara 
+que cuenten con un historial de buena experiencia, esto puede llegar a macar una experician 
+positiva llevando a cabo la divulgacion del negocio. 
+Esto provoca que la incidencia de abandono va bajando directamente conforme aumenta la personalización del servicio.
+
+Por otro lado, 
+al observar métricas como el Net Promoter Score 
+o el índice de satisfacción, nos dice que si 
+la experiencia es mala, se aprecia un claro efecto de 
+``escalera descendente'' en las ventas y la retención. 
+
+\subsection{Indicadores de rentabilidad y medición en CXM}
+
+En este caso, al analizar la métrica del Customer Lifetime Value (CLV), vemos directamente que representa la ganancia total proyectada que un cliente aportará a la empresa durante toda su relación comercial. Para esto, el CLV se vuelve una métrica central porque el CXM no busca ventas aisladas, sino retener al usuario el mayor tiempo posible. Esto nos dice directamente que, si la experiencia a lo largo del "Customer Journey" es positiva, el cliente regresará y comprará más, elevando su CLV de forma agresiva. Este comportamiento justifica la inversión operativa de la empresa, ya que se concentran los esfuerzos en los perfiles más valiosos.
+
+
+Ahora bien, respecto al comportamiento financiero de una empresa que se adelanta a las necesidades del cliente (estrategia proactiva), la tendencia es sumamente positiva. El impacto principal se refleja directamente en la caída drástica del Costo de Adquisición de Clientes (CAC). En este caso, retener a un cliente satisfecho es sustancialmente más barato que invertir en marketing para atraer a uno nuevo. Esto nos demuestra directamente que, al evitar fricciones antes de que ocurran, se genera un efecto de recomendación orgánica; disminuyendo de forma agresiva los gastos de publicidad y elevando los márgenes de ganancia.
+
+\subsection{Diferencias operativas: CRM vs. CXM}
+
+
+\underline{\hspace{0.5cm}\textbf{Datos operativos vs. Percepción emocional}\hspace{0.5cm}}
+
+Ya por último, al revisar el cruce de ambas estrategias, la diferencia fundamental radica en la perspectiva desde la cual se analiza al usuario. El CRM es un sistema que mira ``hacia adentro'' de la empresa; captura los datos duros y cuantitativos (qué compró el cliente, cuánto gastó, cuántas veces llamó a soporte). En cambio, el CXM mira ``hacia afuera'', enfocándose directamente en los datos cualitativos (cómo se sintió el cliente, qué tan fácil fue el proceso, su nivel de frustración o alegría). 
+
+Esto nos dice directamente que el CRM funciona como el registro histórico de \textit{qué} hizo el cliente en la base de datos, mientras que el CXM se encarga de explicar \textit{por qué} lo hizo y \textit{cómo} percibió el servicio durante todo ese proceso.
+
+
+\newpage
+
+\section{Conclusiones}
+
+Por utlimo, como tal 
+el análisis del Customer Experience Management me ayudo a ver tambien 
+cómo transformar las intereacciones del cliente con la pagina  
+en una relacion leal a largo plazo, y esto tambien me lo demuestra cuando estoy comprando con amazon 
+y sale algo mal y se puede devolver sin tema. 
+
+
+Por consiguiente, 
+el trasladar todo lo anterior a la 
+operación nos ayuda a ver, 
+como la caída drástica en la pérdida de consumidores, se debe en gran parte por malas experiencias 
+con el propio servicio al cliente, valga la redundancia. 
+
+
+% Impresión Referencias
+\nocite{*}
+\printbibliography[heading=bibintoc, title={Referencias}]
+
+\end{document}
