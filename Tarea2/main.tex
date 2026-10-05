@@ -1,0 +1,764 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[letterpaper,11pt]{article}
+
+% --- PAQUETES DE IDIOMA
+\usepackage[spanish,mexico]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{iftex}
+
+\usepackage{pdfpages}
+
+% --- PAQUETES MATEMÁTICOS --
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+
+% --- PAQUETES GRÁFICOS Y DE DISEÑO ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{subcaption}
+\usepackage[table]{xcolor}
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, shapes.multipart, positioning, arrows.meta, calc, shadows, decorations.pathreplacing,babel}
+
+% --- LISTAS ---
+\usepackage{enumitem}
+
+% --- PAQUETES DE CÓDIGO ---
+\usepackage{listings}
+% Configuración del estilo de listings
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}   
+\definecolor{keyword}{rgb}{0.0,0.2,0.6}     
+\definecolor{comment}{rgb}{0.25,0.5,0.35}   
+\definecolor{string}{rgb}{0.6,0.0,0.0}      
+\definecolor{number}{rgb}{0.5,0.0,0.5}      
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstset{
+  backgroundcolor=\color{backcolour},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{codepurple},
+  commentstyle=\color{codegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{codegray},
+  frame=single,
+  rulecolor=\color{black},
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  literate={á}{{\'a}}1
+           {é}{{\'e}}1
+           {í}{{\'i}}1
+           {ó}{{\'o}}1
+           {ú}{{\'u}}1
+           {Á}{{\'A}}1
+           {É}{{\'E}}1
+           {Í}{{\'I}}1
+           {Ó}{{\'O}}1
+           {Ú}{{\'U}}1
+           {ñ}{{\~n}}1
+           {Ñ}{{\~N}}1
+           {¿}{{\textquestiondown}}1
+           {¡}{{\textexclamdown}}1
+}
+
+% Estilo para código en C
+\lstdefinestyle{cstyle}{
+  language=C,
+  backgroundcolor=\color{backcolour},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+    keywordstyle=[2]\color{yellow!70!orange}\bfseries,
+    morekeywords=[2]{MPI_Init,MPI_Comm_size,MPI_Comm_rank,MPI_Send,MPI_Recv,MPI_Scatter,MPI_Gather,MPI_Bcast,MPI_Reduce,MPI_Finalize},
+    emph={printf},
+    emphstyle=\color{blue}\bfseries,
+  stringstyle=\color{codepurple},
+  commentstyle=\color{codegray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{codegray},
+  frame=single,
+  rulecolor=\color{black},
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false
+}
+
+% Definición del lenguaje Python para listings
+\lstdefinelanguage[LAB]{Python}{
+    morekeywords={False, None, True, and, as, assert, async, await, break,
+                                class, continue, def, del, elif, else, except, finally,
+                                for, from, global, if, import, in, is, lambda, nonlocal,
+                                not, or, pass, raise, return, try, while, with, yield,
+                                machine, Pin, PWM, ADC, Timer, sleep_ms, sleep_us},
+    morecomment=[l]{\#},
+    morestring=[b]",
+    morestring=[b]',
+    sensitive=true
+}
+
+% Estilo para salidas de consola/terminal
+\lstdefinestyle{output}{
+  backgroundcolor=\color{black!5},
+  basicstyle=\ttfamily\footnotesize,
+  numbers=none,
+  frame=single,
+  rulecolor=\color{black!30},
+  breaklines=true,
+  tabsize=4,
+  showstringspaces=false,
+  xleftmargin=0.5cm,
+  xrightmargin=0.5cm
+}
+
+% --- ESTILOS PARA DIAGRAMAS DE FLUJO (TIKZ) ---
+\tikzset{
+  startstop/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30},
+  process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
+  decision/.style={diamond, aspect=2, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+  io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30},
+  arrow/.style={thick,->,>=stealth}
+}
+
+
+\definecolor{azulresultado}{HTML}{0072C6}
+\definecolor{rojoacarreo}{HTML}{FF0000}
+
+% --- RUTAS DE IMÁGENES ---
+\graphicspath{{img/}{portada_img/}}
+
+\definecolor{armblue}{RGB}{0, 113, 188}
+
+% --- ÍNDICE CON PUNTOS ---
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% --- CONFIGURACIÓN DE PÁGINA (GEOMETRÍA) ---
+\usepackage[
+    left=25mm, 
+    right=25mm,
+    top=35mm,
+    bottom=30mm,
+    headheight=77pt, 
+    papersize={21.59cm,27.94cm}
+]{geometry}
+
+% --- FORMATO DE TEXTO ---
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip} 
+\usepackage{lipsum}  
+
+% --- VARIABLES GLOBALES ---
+\newcommand{\materia}{}
+
+% --- ENCABEZADOS Y PIES DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} 
+
+
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0.4pt} 
+\renewcommand{\footrulewidth}{0pt}  
+% --- FORMATO DE TEXTO ---
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip} 
+\usepackage{lipsum}  
+
+
+% --- ENCABEZADOS Y PIES DE PÁGINA ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} 
+\fancyhead[L]{\includegraphics[height=1.5cm]{portada_img/der.png}}
+\fancyhead[R]{\includegraphics[height=1.5cm]{portada_img/izq.png}}
+\fancyfoot[C]{\thepage} 
+\renewcommand{\headrulewidth}{0.4pt} 
+\renewcommand{\footrulewidth}{0pt}  
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[L]{\includegraphics[height=1.5cm]{portada_img/der.png}}%
+  \fancyhead[R]{\includegraphics[height=1.5cm]{portada_img/izq.png}}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+% --- BIBLIOGRAFÍA ---
+\usepackage[backend=biber, style=apa, sortcites, url=true]{biblatex}
+\addbibresource{referencias.bib}
+
+% --- HIPERVÍNCULOS ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan
+}
+
+
+% --- ADAPTACION DEL NOTEBOOK A REPORTE ---
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{needspace}
+\setlength{\emergencystretch}{3em}
+\lstset{
+  columns=fullflexible,
+  keepspaces=true,
+  breakatwhitespace=false,
+  upquote=true,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1
+           {ó}{{\'o}}1 {ú}{{\'u}}1 {Á}{{\'A}}1
+           {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1
+           {Ú}{{\'U}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+           {¿}{{\textquestiondown}}1 {¡}{{\textexclamdown}}1
+           {–}{{\textendash}}1 {─}{{\textendash}}1
+           {━}{{\textendash}}1 {✓}{{\ensuremath{\checkmark}}}1
+           {✗}{{\ensuremath{\times}}}1
+}
+\lstdefinestyle{pythonreport}{language=[LAB]Python,basicstyle=\ttfamily\footnotesize}
+\lstdefinestyle{reportoutput}{style=output,aboveskip=3pt,belowskip=3pt}
+
+\begin{document}
+
+\input{portada.tex}
+
+\newpage
+{\hypersetup{linkcolor=black}\tableofcontents}
+
+\newpage
+
+\setcounter{page}{1}
+\singlespacing
+
+
+\section{Configuracion del Entorno en Google Colab}
+
+\textbf{Ejecutar el siguiente comando:}
+
+% Notebook: celda 1, id zRCeJ2KGDMy_
+\begin{lstlisting}[style=pythonreport]
+!pip -q install flask pyngrok
+\end{lstlisting}
+
+% Notebook: celda 2, id 8l0nnFNVXgqP
+\section*{Patrón Factory (crear el procesador de Pago)}
+
+\textbf{Propósito}: Lo que hace este patron creacional es dejar la creacion de los objetos en una sola funcion, donde en este caso \texttt{crear\_pago(tipo)} recibe el tipo de pago y nos regresa un procesador de Stripe o PayPal listo para cobrar. Esto para que el resto del programa solo utilice el metodo \texttt{cobrar()} sin tener que crear directamente cada clase en todas las partes del codigo.
+
+\textbf{Implementacion:}
+
+% Notebook: celda 3, id vmf9r5YdLf0m
+\begin{lstlisting}[style=pythonreport]
+# Celda 2 – Patrón Factory: Procesadores de pago
+class PagoStripe:
+    def cobrar(self, monto):
+        print(f'[Stripe] Procesando pago de ${monto:.2f}')
+        return True
+
+class PagoPayPal:
+    def cobrar(self, monto):
+        print(f'[PayPal] Procesando pago de ${monto:.2f}')
+        return True
+
+def crear_pago(tipo):
+    """Factory: crea el procesador de pago según el tipo recibido."""
+    fabricas = {
+        'stripe': PagoStripe,
+        'paypal': PagoPayPal
+    }
+    if tipo not in fabricas:
+        raise ValueError(f'Tipo de pago no soportado: {tipo}')
+    return fabricas[tipo]()
+
+# Prueba rápida
+procesador = crear_pago('stripe')
+procesador.cobrar(100)   # Salida: [Stripe] Procesando pago de $100.00
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[Stripe] Procesando pago de $100.00
+True
+\end{lstlisting}
+
+% Notebook: celda 4, id 8c7_3iNuYlML
+\subsection*{Preguntas - Factory}
+\addcontentsline{toc}{subsection}{Preguntas - Factory}
+
+\Needspace{5\baselineskip}
+\textbf{1. ¿Por qué es preferible usar una función crear\_pago() en lugar de instanciar directamente PagoStripe() o PagoPayPal() en cada parte del código?}
+
+Esto para poder tener un mejor control de la creacion de los objetos, ademas de revisar si el tipo de pago esta soportado. Si instanciamos directamente, el codigo queda acoplado a esas clases, por lo que tendriamos que regresar a modificar varias partes cuando agregamos un nuevo metodo de pago. Factory nos ayuda con el principio de Abierto/Cerrado (OCP) en el codigo que utiliza los pagos, donde podemos agregar otro procesador sin cambiar el flujo principal. No obstante, en esta implementacion si se tiene que actualizar el registro del diccionario \texttt{fabricas}.
+
+\Needspace{5\baselineskip}
+\textbf{2. ¿Qué tendría que cambiar si quisieras agregar soporte para MercadoPago como tercer método de pago?}
+
+Solo se tendria que crear la clase \texttt{PagoMercadoPago} con su metodo \texttt{cobrar(self, monto)}, de igual forma con el mismo parametro del monto, y registrar esa clase con la clave \texttt{mercadopago} en el diccionario \texttt{fabricas} dentro de la funcion de creacion de pago. De esta forma \texttt{crear\_pago('mercadopago')} ya podria regresar ese procesador sin cambiar la forma en que el checkout llama a \texttt{cobrar()}.
+
+\Needspace{5\baselineskip}
+\textbf{3. ¿Qué excepción lanza la función si se pasa un tipo de pago desconocido? ¿Cómo podrías manejar ese error en el flujo principal?}
+
+Se lanza la excepcion \texttt{ValueError}, esto por que el tipo de pago no se encuentra registrado en el diccionario \texttt{fabricas}. No es solo un mensaje de \texttt{print}, ya que si no se maneja la excepcion, se detiene la ejecucion de esa llamada. Para manejarla se puede poner la llamada a \texttt{crear\_pago()} o a \texttt{flujo\_checkout()} dentro de un bloque \texttt{try/except ValueError}, donde se muestre el mensaje del error y se le pida al usuario elegir un metodo valido, sin continuar con el cobro de ese intento.
+
+
+% Notebook: celda 6, id aLA_k85yjix8
+\section{\textbf{Patron Strategy - Estrategias de Descuento}}
+
+\textbf{Propósito}: Lo que hace este patron de comportamiento es dejar cada descuento en su propia clase, donde el carrito solo llama al metodo \texttt{aplicar()} de la estrategia que tenga en ese momento. Esto para poder cambiar la forma de calcular el descuento sin modificar la clase \texttt{Carrito}.
+
+\textbf{Implementacion:}
+
+% Notebook: celda 7, id 8c09c2b1
+\begin{lstlisting}[style=pythonreport]
+# Celda 3 – Patrón Strategy: Descuentos
+
+class DescuentoVIP:
+    def aplicar(self, monto):
+        descuento = monto * 0.15
+        print(f'[VIP] Descuento del 15%: -${descuento:.2f}')
+        return monto - descuento
+
+class DescuentoBlackFriday:
+    def aplicar(self, monto):
+        descuento = monto * 0.30
+        print(f'[Black Friday] Descuento del 30%: -${descuento:.2f}')
+        return monto - descuento
+
+class SinDescuento:
+    def aplicar(self, monto):
+        return monto  # Sin cambios al precio
+
+class Carrito:
+    def __init__(self, estrategia_descuento=None):
+        self.estrategia = estrategia_descuento or SinDescuento()
+
+    def calcular_total(self, monto_base):
+        return self.estrategia.aplicar(monto_base)
+
+# Pruebas de estrategias
+carrito_vip = Carrito(DescuentoVIP())
+print('Total VIP:', carrito_vip.calcular_total(200))   # 170.0
+
+carrito_bf = Carrito(DescuentoBlackFriday())
+print('Total Black Friday:', carrito_bf.calcular_total(200))   # 140.0
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[VIP] Descuento del 15%: -$30.00
+Total VIP: 170.0
+[Black Friday] Descuento del 30%: -$60.00
+Total Black Friday: 140.0
+\end{lstlisting}
+
+% Notebook: celda 8, id a779e3ed
+\subsection*{Preguntas - Strategy}
+\addcontentsline{toc}{subsection}{Preguntas - Strategy}
+
+\Needspace{5\baselineskip}
+\textbf{4. ¿Cómo cambiarías la estrategia de descuento en tiempo de ejecución, después de haber creado el Carrito?}
+
+Pues una vez creado el carrito, solo se debe de reasignar su atributo \texttt{estrategia} con una nueva instancia, donde en este caso seria \texttt{carrito\_bf.estrategia = DescuentoVIP()}. Esto reemplaza el descuento de Black Friday por el VIP, por lo que no se suman los dos descuentos. Al volver a llamar a \texttt{calcular\_total(200)}, el carrito utiliza la estrategia actual y nos regresa 170. No se vuelve a ejecutar el constructor, ya que lo que cambia es el atributo del objeto que ya tenemos creado.
+
+% Notebook: celda 9, id vzf8sNpplT7E
+\begin{lstlisting}[style=pythonreport]
+carrito_bf.estrategia = DescuentoVIP()
+print('Total despues de cambiar a VIP:', carrito_bf.calcular_total(200))
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[VIP] Descuento del 15%: -$30.00
+Total despues de cambiar a VIP: 170.0
+\end{lstlisting}
+
+% Notebook: celda 10, id OLhuMzna7SMB
+\Needspace{5\baselineskip}
+\textbf{5. ¿Qué ventaja tiene encapsular cada descuento en su propia clase en lugar de usar un bloque if/elif en el método calcular\_total()?}
+
+Lo que hacemos al encapsular los descuentos es que cada clase tenga una sola responsabilidad, por lo que podemos probar y cambiar cada regla por separado. Ademas de esto, se evita que el metodo \texttt{calcular\_total()} crezca con un bloque de \texttt{if/elif} cada vez que agregamos una promocion. Esto nos ayuda con Responsabilidad Unica y Abierto/Cerrado, ya que podemos añadir otro descuento sin modificar la clase \texttt{Carrito}.
+
+\Needspace{5\baselineskip}
+\textbf{6. Crea una nueva estrategia DescuentoEstudiante que aplique un 10\% de descuento e intégrala al código existente.}
+
+En este caso creamos la clase \texttt{DescuentoEstudiante} con el mismo metodo \texttt{aplicar(self, monto)}, donde se calcula el 10\% del monto y se regresa el precio despues de quitar ese descuento. De igual forma la pasamos al \texttt{Carrito}, por lo que con un producto de 200 nos queda un total de 180. Ademas de esto, se registra con la clave \texttt{estudiante} en el flujo del checkout para poder utilizarla junto con los pagos, el envio y las notificaciones.
+
+% Notebook: celda 11, id Qqv2nRGduh56
+\begin{lstlisting}[style=pythonreport]
+# Pregunta 6 – Nueva estrategia de descuento del 10%
+class DescuentoEstudiante:
+    def aplicar(self, monto):
+        descuento = monto * 0.10
+        print(f'[Estudiante] Descuento del 10%: -${descuento:.2f}')
+        return monto - descuento
+
+# Se utiliza el mismo Carrito, sin cambiar su implementacion.
+carrito_estudiante = Carrito(DescuentoEstudiante())
+total_estudiante = carrito_estudiante.calcular_total(200)
+assert total_estudiante == 180.0
+print('Total estudiante:', total_estudiante)
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[Estudiante] Descuento del 10%: -$20.00
+Total estudiante: 180.0
+\end{lstlisting}
+
+% Notebook: celda 12, id 683958c0
+\section{Patron Observer (Notificaciones)}
+
+
+\textbf{Propósito}: Lo que hace este patron es permitir que un objeto avise a varios objetos cuando ocurre un evento, donde en este caso tenemos al \texttt{Notificador}, que se encarga de avisar a los observadores que se encuentran suscritos.
+
+% Notebook: celda 13, id 41ee4b46
+\begin{lstlisting}[style=pythonreport]
+# Celda 4 – Patrón Observer: Notificaciones
+
+class Notificador:
+    """Sujeto observable que mantiene la lista de suscriptores."""
+    def __init__(self):
+        self._observadores = []
+
+    def suscribir(self, observador):
+        self._observadores.append(observador)
+
+    def desuscribir(self, observador):
+        self._observadores.remove(observador)
+
+    def notificar(self, evento):
+        for obs in self._observadores:
+            obs.actualizar(evento)
+
+class NotificadorCorreo:
+    """Observador: envía notificación por correo electrónico."""
+    def actualizar(self, evento):
+        print(f'[Email] Notificación enviada al cliente: {evento}')
+
+class GeneradorFactura:
+    """Observador: genera la factura electrónica."""
+    def actualizar(self, evento):
+        print(f'[Factura] Generando factura para: {evento}')
+
+# Prueba
+notificador = Notificador()
+notificador.suscribir(NotificadorCorreo())
+notificador.suscribir(GeneradorFactura())
+notificador.notificar('Pago de $170.00 con Stripe')
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[Email] Notificación enviada al cliente: Pago de $170.00 con Stripe
+[Factura] Generando factura para: Pago de $170.00 con Stripe
+\end{lstlisting}
+
+% Notebook: celda 14, id qFXyBJ55qged
+\subsection*{Preguntas - Observer}
+\addcontentsline{toc}{subsection}{Preguntas - Observer}
+
+\Needspace{5\baselineskip}
+\textbf{7. ¿Qué ocurre si llamas a notificador.notificar() sin haber suscrito ningún observador?}
+
+Pues en este caso no ocurre ningun error, esto por que la lista  de observadores se encuentra vacia, por lo que el ciclo \texttt{for} no tiene ningun objeto que recorrer. Lo que hace es que el programa siga normalmente, pero no se manda ninguna notificacion, ya que no hay nadie suscrito para recibirla.
+
+\Needspace{5\baselineskip}
+\textbf{8. ¿Cómo implementarías un observador SMSNotificador que imprima [SMS] Mensaje enviado: \{evento\}?}
+
+Solo se tendria que crear la clase \texttt{SMSNotificador}, de igual forma como se hizo con el correo y la factura, donde esta clase debe de tener el metodo \texttt{actualizar(self, evento)} y dentro poner \texttt{print(f'[SMS] Mensaje enviado: \{evento\}')}. Ademas de esto, para que reciba los avisos se tendria que registrar con \texttt{notificador.suscribir(SMSNotificador())}, lo que hace que se agregue a la lista sin modificar la clase \texttt{Notificador}.
+
+\Needspace{5\baselineskip}
+\textbf{9. ¿Por qué se dice que el Observer desacopla al emisor de los receptores del evento?}
+
+Esto por que el \texttt{Notificador} solo se encarga de recorrer la lista de los observadores y llamar al metodo \texttt{actualizar(evento)} de cada uno, donde no necesita saber como se manda el correo o como se genera la factura. Cada clase se encarga de su propia parte, por lo que si en un futuro queremos agregar las notificaciones por SMS, solo agregamos ese observador y lo suscribimos, sin cambiar la logica del emisor.
+
+% Notebook: celda 15, id 70ec8f57
+\section{Patrón Adapter}
+
+
+
+\textbf{Propósito}: Lo que hace este patron es adaptar la forma en que se utiliza una clase para que sea compatible con lo que necesita nuestro sistema.
+
+
+% Notebook: celda 16, id 03dfe71a
+\begin{lstlisting}[style=pythonreport]
+# Celda 5 – Patrón Adapter: Cotización de envío
+
+class APIEnvioFalsa:
+    """API externa con interfaz incompatible (en inglés)."""
+    def get_shipping_quote(self, destination, weight_kg):
+        return {
+            'cost_usd': weight_kg * 5.0,
+            'days': 3
+        }
+
+class AdapterEnvio:
+    """Adapter: adapta APIEnvioFalsa a la interfaz esperada por el checkout."""
+    def __init__(self, api_externa):
+        self._api = api_externa
+
+    def cotizar_envio(self, destino, peso_kg):
+        resultado = self._api.get_shipping_quote(destino, peso_kg)
+        costo = resultado['cost_usd']
+        dias  = resultado['days']
+        print(f'[Envío] Destino: {destino} | Costo: ${costo:.2f} | Días: {dias}')
+        return costo
+
+# Prueba
+api_externa = APIEnvioFalsa()
+adapter = AdapterEnvio(api_externa)
+costo_envio = adapter.cotizar_envio('Ciudad de México', 2.0)
+# Salida: [Envío] Destino: Ciudad de México | Costo: $10.00 | Días: 3
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[Envío] Destino: Ciudad de México | Costo: $10.00 | Días: 3
+\end{lstlisting}
+
+% Notebook: celda 17, id zLF5GLLRrmsz
+\subsection*{Preguntas - Adapter}
+\addcontentsline{toc}{subsection}{Preguntas - Adapter}
+
+\Needspace{5\baselineskip}
+\textbf{10. ¿Por qué no es recomendable llamar directamente a get\_shipping\_quote() desde el flujo principal del checkout?}
+
+Esto por que el checkout quedaria dependiendo directamente de la API externa, donde si en un futuro cambia el nombre del metodo o los parametros que recibe, tendriamos que modificar el flujo principal. Lo que hacemos al utilizar el Adapter es dejar esos cambios en una sola clase, por lo que se nos hace mas facil cambiar el proveedor de envio sin modificar toda la parte de la compra.
+
+\Needspace{5\baselineskip}
+\textbf{11. ¿Qué cambiarías en AdapterEnvio si la APIEnvioFalsa comenzara a devolver el costo en pesos mexicanos (MXN) en lugar de dólares?}
+
+Solo se tendria que modificar el metodo \texttt{cotizar\_envio()} dentro de \texttt{AdapterEnvio}, donde primero se toma el costo en pesos de la respuesta de la API y se convierte a dolares. De esta forma el checkout sigue recibiendo el costo en la moneda que espera.
+
+\Needspace{5\baselineskip}
+\textbf{12. ¿Cuál es la diferencia principal entre el Adapter y el Decorator como patrones estructurales?}
+
+En el caso de Adapter se usa mas que nada para hacer compatibles dos interfaces que son distintas, como fue el caso de la API de envio con nuestro checkout. En el caso del Decorator, lo que hace es agregar funciones o comportamientos a un objeto conservando la misma interfaz, por lo que uno nos ayuda a adaptar como se usa una clase y el otro a agregarle mas funcionalidades.
+
+% Notebook: celda 18, id 51bb1da1
+\section{Integración de Mini-Checkout}
+
+
+Ahora bien, una vez que tenemos los cuatro patrones por separado, lo que hacemos es juntarlos en la funcion \texttt{flujo\_checkout()}. Primero se utiliza Factory para crear el metodo de pago, despues Strategy para aplicar el descuento al monto del producto y de igual forma Adapter para obtener el costo del envio, donde este costo se suma al total que ya tenia el descuento.
+
+Por ultimo se realiza el cobro y, si este fue exitoso, se utiliza Observer para avisar al correo y al generador de la factura.
+
+% Notebook: celda 19, id 9b7007fd
+\begin{lstlisting}[style=pythonreport]
+# Celda 6 – Flujo completo del mini-checkout
+
+def flujo_checkout(tipo_pago, monto_producto,
+                   tipo_descuento='ninguno',
+                   destino='Ciudad de México',
+                   peso_kg=1.0):
+    print('\n' + '='*50)
+    print('       INICIANDO CHECKOUT')
+    print('='*50)
+
+    # 1. Factory: crear procesador de pago
+    procesador = crear_pago(tipo_pago)
+
+    # 2. Strategy: calcular total con descuento
+    estrategias = {
+        'vip':          DescuentoVIP(),
+        'black_friday': DescuentoBlackFriday(),
+        'estudiante':   DescuentoEstudiante(),
+        'ninguno':      SinDescuento()
+    }
+    carrito = Carrito(estrategias.get(tipo_descuento, SinDescuento()))
+    total   = carrito.calcular_total(monto_producto)
+
+    # 3. Adapter: cotizar envío
+    api_envio    = APIEnvioFalsa()
+    adapter      = AdapterEnvio(api_envio)
+    costo_envio  = adapter.cotizar_envio(destino, peso_kg)
+    total_final  = total + costo_envio
+    print(f'[Total con envío] ${total_final:.2f}')
+
+    # 4. Observer: notificar al pagar
+    notificador = Notificador()
+    notificador.suscribir(NotificadorCorreo())
+    notificador.suscribir(GeneradorFactura())
+    exito = procesador.cobrar(total_final)
+    if exito:
+        notificador.notificar(
+            f'Pago de ${total_final:.2f} con {tipo_pago.capitalize()}'
+        )
+
+    print('='*50)
+    return exito
+
+# Prueba de ejecución integrada
+flujo_checkout('stripe', 200.0, 'vip', 'Ciudad de México', 2.0)
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+
+==================================================
+       INICIANDO CHECKOUT
+==================================================
+[VIP] Descuento del 15%: -$30.00
+[Envío] Destino: Ciudad de México | Costo: $10.00 | Días: 3
+[Total con envío] $180.00
+[Stripe] Procesando pago de $180.00
+[Email] Notificación enviada al cliente: Pago de $180.00 con Stripe
+[Factura] Generando factura para: Pago de $180.00 con Stripe
+==================================================
+True
+\end{lstlisting}
+
+% Notebook: celda 20, id 8735f830
+\section{Pruebas y Validación del Checkout}
+
+
+% Notebook: celda 21, id FHkvCRmrsp-p
+\begin{lstlisting}[style=pythonreport]
+# Celda 7 – Pruebas y validación
+
+# ── Prueba 1: Assertion básico del enunciado ──────────────────────
+assert crear_pago('stripe').cobrar(100)
+print('✓ Checkout OK')
+
+# ── Prueba 2: Flujo Stripe + descuento VIP ────────────────────────
+resultado1 = flujo_checkout(
+    tipo_pago       = 'stripe',
+    monto_producto  = 200,
+    tipo_descuento  = 'vip',
+    destino         = 'Monterrey',
+    peso_kg         = 1.5
+)
+assert resultado1, 'Error: el flujo Stripe+VIP falló'
+print('✓ Prueba Stripe + VIP aprobada')
+
+# ── Prueba 3: Flujo PayPal + Black Friday ─────────────────────────
+resultado2 = flujo_checkout(
+    tipo_pago       = 'paypal',
+    monto_producto  = 500,
+    tipo_descuento  = 'black_friday',
+    destino         = 'Guadalajara',
+    peso_kg         = 3.0
+)
+assert resultado2, 'Error: el flujo PayPal+BlackFriday falló'
+print('✓ Prueba PayPal + Black Friday aprobada')
+
+# ── Prueba 4: Tipo de pago inválido (debe lanzar ValueError) ──────
+try:
+    crear_pago('bitcoin')
+    print('✗ Error: debió lanzar ValueError')
+except ValueError as e:
+    print(f'✓ Error manejado correctamente: {e}')
+
+print('\n✓ Todas las pruebas pasaron correctamente')
+\end{lstlisting}
+\par\noindent\textbf{Salida:}
+\begin{lstlisting}[style=reportoutput,language={}]
+[Stripe] Procesando pago de $100.00
+✓ Checkout OK
+
+==================================================
+       INICIANDO CHECKOUT
+==================================================
+[VIP] Descuento del 15%: -$30.00
+[Envío] Destino: Monterrey | Costo: $7.50 | Días: 3
+[Total con envío] $177.50
+[Stripe] Procesando pago de $177.50
+[Email] Notificación enviada al cliente: Pago de $177.50 con Stripe
+[Factura] Generando factura para: Pago de $177.50 con Stripe
+==================================================
+✓ Prueba Stripe + VIP aprobada
+
+==================================================
+       INICIANDO CHECKOUT
+==================================================
+[Black Friday] Descuento del 30%: -$150.00
+[Envío] Destino: Guadalajara | Costo: $15.00 | Días: 3
+[Total con envío] $365.00
+[PayPal] Procesando pago de $365.00
+[Email] Notificación enviada al cliente: Pago de $365.00 con Paypal
+[Factura] Generando factura para: Pago de $365.00 con Paypal
+==================================================
+✓ Prueba PayPal + Black Friday aprobada
+✓ Error manejado correctamente: Tipo de pago no soportado: bitcoin
+
+✓ Todas las pruebas pasaron correctamente
+\end{lstlisting}
+
+% Notebook: celda 22, id 10DF65ISs0fx
+
+
+\Needspace{12\baselineskip}
+\subsection*{Tabla Comparativa}
+\addcontentsline{toc}{subsection}{Tabla Comparativa}
+
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{\dimexpr 0.1\linewidth-4.24pt\relax}|>{\raggedright\arraybackslash}p{\dimexpr 0.16\linewidth-6.784pt\relax}|>{\raggedright\arraybackslash}p{\dimexpr 0.25\linewidth-10.6pt\relax}|>{\raggedright\arraybackslash}p{\dimexpr 0.25\linewidth-10.6pt\relax}|>{\raggedright\arraybackslash}p{\dimexpr 0.24\linewidth-10.176pt\relax}|}
+\hline
+\rowcolor{black!8}
+\textbf{Patrón} & \textbf{Categoría} & \textbf{Problema que resuelve} & \textbf{Clase / Función clave} & \textbf{Principio SOLID principal} \\ \hline
+\endfirsthead
+\hline
+\rowcolor{black!8}
+\textbf{Patrón} & \textbf{Categoría} & \textbf{Problema que resuelve} & \textbf{Clase / Función clave} & \textbf{Principio SOLID principal} \\ \hline
+\endhead
+\textbf{Factory} & Creacional & Evita crear directamente cada procesador en todas las partes del codigo, donde una sola funcion se encarga de elegirlo. & \texttt{crear\_pago(tipo)} & OCP (Abierto/Cerrado): permite agregar metodos de pago sin cambiar el flujo principal. \\ \hline
+\textbf{Strategy} & Comportamiento & Permite cambiar el descuento sin meter todas las reglas en un bloque de \texttt{if/elif} dentro del carrito. & \texttt{Carrito}, \texttt{DescuentoVIP}, \texttt{DescuentoBlackFriday}, \texttt{DescuentoEstudiante} y \texttt{SinDescuento} & OCP (Abierto/Cerrado): se pueden agregar descuentos sin modificar la clase \texttt{Carrito}. \\ \hline
+\textbf{Observer} & Comportamiento & Permite avisar a varios objetos sobre el pago, donde cada uno se encarga de lo que hace con ese aviso. & \texttt{Notificador}, \texttt{NotificadorCorreo} y \texttt{GeneradorFactura} & OCP (Abierto/Cerrado): se pueden agregar observadores sin cambiar la clase \texttt{Notificador}. \\ \hline
+\textbf{Adapter} & Estructural & Hace compatible la API de envio con el metodo que utiliza el checkout, esto para dejar los cambios del proveedor en una sola clase. & \texttt{AdapterEnvio} y \texttt{cotizar\_envio()} & SRP (Responsabilidad Única): la adaptacion de la API queda en \texttt{AdapterEnvio}, separada del flujo de compra. \\ \hline
+\end{longtable}
+\endgroup
+
+
+
+% Notebook: celda 23, id 5uHIttom1rBn
+\section{Preguntas de Validación Final}
+
+\Needspace{5\baselineskip}
+\textbf{1. ¿Cuál de los cuatro patrones implementados consideras el más difícil de comprender y por qué?}
+
+Pues de estos cuatro considero que el Observer es el mas dificil de comprender, esto por que hay que seguir como se relaciona el objeto que manda el aviso con todos los que lo reciben. Donde en este caso el \texttt{Notificador} no hace directamente lo del correo o la factura, solo llama al metodo \texttt{actualizar()} de los objetos suscritos. Ademas de esto, hay que tener claro que suscribir un objeto solo lo agrega a la lista, y que el aviso se manda hasta que llamamos a \texttt{notificar()}, lo que hace que sea un poco menos directo de seguir que crear el pago o aplicar un descuento.
+
+\Needspace{5\baselineskip}
+\textbf{2. ¿En qué otro escenario de negocios electrónicos podrías aplicar el patrón Observer? Describe el caso brevemente.}
+
+Se podria utilizar en el inventario de una tienda, donde si un producto se agota, el inventario manda el aviso a los objetos que estan suscritos. En este caso uno se encargaria de quitarlo de los productos disponibles y otro de avisar al area de compras para pedir mas al proveedor, de igual forma se podria registrar ese evento para las estadisticas. Esto para que el inventario solo se encargue de mandar el aviso y no tenga que hacer toda la logica de cada area.
+
+\Needspace{5\baselineskip}
+\textbf{3. ¿Qué desventaja tendría usar el patrón Factory si el número de métodos de pago crece a 20 opciones distintas? ¿Cómo lo mejorarías?}
+
+La desventaja seria que el diccionario \texttt{fabricas} creceria y tendriamos que mantener el registro de todas esas clases dentro de la misma funcion, por lo que cada nuevo metodo de pago nos haria regresar a modificar esa parte. No obstante, tener 20 opciones no significa que el patron deje de servir, mas que nada se vuelve mas trabajo mantenerlo. Para mejorarlo sacaria el diccionario a un registro separado y agregaria una funcion para registrar los procesadores, donde \texttt{crear\_pago()} solo revise el tipo y cree el objeto que corresponde.
+
+\Needspace{5\baselineskip}
+\textbf{4. ¿Qué ocurre con el principio de Responsabilidad Única si agregas la lógica de descuento directamente dentro de crear\_pago()?}
+
+Se estaria rompiendo el principio de Responsabilidad Unica, esto por que la funcion ya no solo se encargaria de crear el procesador de pago, sino tambien de calcular los descuentos. Lo que hace esto es que ahora tengamos que modificar la misma funcion tanto cuando cambia un metodo de pago como cuando cambia una promocion, por lo que lo mejor seria dejar la creacion en Factory y los descuentos en sus propias clases de Strategy.
+
+\Needspace{5\baselineskip}
+\textbf{5. ¿Cómo extenderías el sistema para que el GeneradorFactura envíe la factura al correo del cliente automáticamente, aprovechando los patrones ya implementados?}
+
+Lo que haria seria que \texttt{GeneradorFactura}, ademas de recibir el aviso del pago, tenga un notificador propio para avisar cuando la factura ya este generada. A este se le suscribiria un nuevo observador para enviar la factura por correo, donde el evento debe de incluir el correo del cliente y la referencia al archivo generado. De esta forma primero se genera la factura y despues se manda el aviso para enviarla, esto por que suscribir el correo y la factura al mismo evento de pago no asegura por si solo que el correo reciba el archivo. En el codigo actual solo se simulan estas acciones con \texttt{print}, por lo que para un envio real tambien se tendria que implementar la generacion del archivo y el servicio de correo.
+
+\Needspace{5\baselineskip}
+\textbf{6. ¿Qué recomendación de arquitectura darías a un equipo que va a construir un e-commerce completo basándote en lo que aprendiste en esta práctica?}
+
+Recomendaria separar las partes de pagos, descuentos, envios y notificaciones, esto para que cada una tenga su propia responsabilidad y sea mas facil mantener el codigo. De igual forma utilizaria Factory para crear los procesadores, Strategy para las promociones, Adapter para conectar los proveedores externos y Observer para los avisos de los eventos. Ademas de esto, dejaria los servicios como dependencias que se le pasan al flujo, por lo que si cambia el proveedor de envio o de pago, se pueda cambiar esa parte sin tener que modificar toda la compra. Por ultimo agregaria pruebas y manejo de errores, donde se revise que un pago fallido no se tome como una compra terminada.
+
+% Notebook: celda 24, id 7pnCLf041_XL
+\Needspace{14\baselineskip}
+\section*{Conclusión}
+\addcontentsline{toc}{section}{Conclusión}
+
+Con esta practica podemos ver como los patrones de diseño nos ayudan a organizar un proceso que tiene varias partes, donde en este caso fue una compra con su metodo de pago, su descuento, el costo del envio y las notificaciones. Lo que hacemos es que cada clase se encargue de su propia parte, por lo que se evita juntar toda la logica en una sola funcion que despues sea dificil de modificar.
+
+Ademas de esto, con las pruebas se puede ver que podemos utilizar Stripe o PayPal y aplicar descuentos distintos conservando el mismo flujo. De igual forma, si queremos agregar otro observador o cambiar la API de envio, tenemos una parte especifica donde hacerlo, lo que hace que en un futuro sea mas facil escalar el sistema.
+
+\end{document}

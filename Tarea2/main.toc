@@ -1,0 +1,14 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Configuracion del Entorno en Google Colab}{1}{section.1}%
+\contentsline {subsection}{Preguntas - Factory}{1}{section*.2}%
+\contentsline {section}{\numberline {2}\textbf {Patron Strategy - Estrategias de Descuento}}{2}{section.2}%
+\contentsline {subsection}{Preguntas - Strategy}{3}{section*.3}%
+\contentsline {section}{\numberline {3}Patron Observer (Notificaciones)}{4}{section.3}%
+\contentsline {subsection}{Preguntas - Observer}{5}{section*.4}%
+\contentsline {section}{\numberline {4}Patrón Adapter}{5}{section.4}%
+\contentsline {subsection}{Preguntas - Adapter}{6}{section*.5}%
+\contentsline {section}{\numberline {5}Integración de Mini-Checkout}{7}{section.5}%
+\contentsline {section}{\numberline {6}Pruebas y Validación del Checkout}{8}{section.6}%
+\contentsline {subsection}{Tabla Comparativa}{10}{section*.6}%
+\contentsline {section}{\numberline {7}Preguntas de Validación Final}{10}{section.7}%
+\contentsline {section}{Conclusión}{12}{section*.7}%
